@@ -9,7 +9,8 @@ available). Message broker is also available as windows or linux native
 application (even in Raspberry Pi version). Most common message brokers
 are "mosquitto" and "RabbitMQ".
 
-Install PIP(3)
+Install PIP(3) (Raspberry Pi Lite no desktop version,
+Raspberry desktop version might already contain PIP):
 - sudo apt install python-pip
 - sudo apt install python3-pip
 
