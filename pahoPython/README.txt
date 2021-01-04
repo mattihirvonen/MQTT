@@ -4,6 +4,8 @@ with python 2 or 3. Application is test driven with Raspberry Pi 1.
 Application can run also with ordinary PC. Required external library
 is paho-mqtt library, which have to install!
 
+http://www.steves-internet-guide.com/mosquitto-broker/
+
 MQTT message broker can be linux docker (several docker instances are
 available). Message broker is also available as windows or linux native
 application (even in Raspberry Pi version). Most common message brokers
