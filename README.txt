@@ -1,6 +1,6 @@
 README.txt
 ==========
 
-Each sob folder have own README file.
-Current sob folders / projects are
+Each sub folder have own README file.
+Current sub folders / projects are:
 - pahoPython
