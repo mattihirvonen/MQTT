@@ -10,7 +10,7 @@ Ref:
 
 mosquitto-cert.sh
 =================
-Tool create and install mosquitto server SSL/TLS keys and configuration
+Command line tool create and install mosquitto server SSL/TLS keys and configuration
 
   mosquitto-cert.sh  mkconfig       create certificate and configuration files into "config/" folder
   
