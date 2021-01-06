@@ -23,7 +23,7 @@ Python(2):
 
 Python3:
  - pip3 install paho-mqtt
- 
+
 Run:
 - python  raspi1mqtt.py
 - python3 raspi1mqtt.py
