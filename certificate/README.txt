@@ -8,22 +8,24 @@ Ref:
   https://mosquitto.org/man/mosquitto-conf-5.html
 
 
-"mkcert.sh" create and install mosquitto server SSL/TLS keys and configuration
+mosquitto-cert.sh
+=================
+Tool create and install mosquitto server SSL/TLS keys and configuration
 
-  mkcert.sh  mkconfig    create certificate and configuration files into "config/" folder
+  mosquitto-cert.sh  mkconfig       create certificate and configuration files into "config/" folder
   
-  mkcert.sh  install     copy certificate and configuration files from "config/" folder
-                         to "/etc/mosquitto/*" folders
+  mosquitto-cert.sh  install        copy certificate and configuration files from "config/" folder
+                                    to "/etc/mosquitto/*" folders
 						 
-  mkcert.sh  id          list running docker container instances and ID(s).
-                         ID required as command line argument when
-						 copy config files from/to container's folder(s)
+  mosquitto-cert.sh  id             list running docker container instances and ID(s).
+                                    ID required as command line argument when
+						            copy config files from/to container's folder(s)
 						 
-  mkcert.sh getconfig    copy docker container's mosquitto server's config files
-                         into host's local folder "config/"
+  mosquitto-cert.sh  getconfig ID   copy docker container's mosquitto server's config files
+                                    into host's local folder "config/"
 
-  mkcert.sh putconfig    copy mosquitto server's config files from local host's "config/"
-                         folder into docker container's "/root/config/" folder
+  mosquitto-cert.sh  putconfig ID   copy mosquitto server's config files from local host's "config/"
+                                    folder into docker container's "/root/config/" folder
 						 
 =======================================================
 

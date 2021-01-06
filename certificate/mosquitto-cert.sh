@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Check: "server.cnf" source file
+# Check: "mosquitto-cert.cnf" source file
 #
 # Ref(s):
 # http://www.steves-internet-guide.com/creating-and-using-client-certificates-with-mqtt-and-mosquitto/
@@ -11,7 +11,7 @@
 # https://rietta.com/blog/openssl-generating-rsa-key-from-command/
 #
 
-OUTDIR=config
+OUTDIR=mosquitto-config
 
 PASSPHRASE_CA_KEY=passphrase
 COMMONNAME=mosquitto             # Typically same as server's host name
@@ -38,7 +38,7 @@ mkConfigFiles () {
 	# Paho do not accept IP number instead of domain name when using security feature!
 	# If required, set valid hostname in client's "/etc/hosts"file
 	##  openssl req -new -config server.cnf -keyout server.key -out server.csr
-		openssl req -new -config server.cnf -x509 -days 1826 -key $OUTDIR/ca.key -out $OUTDIR/ca.crt
+		openssl req -new -config mosquitto-server.cnf -x509 -days 1826 -key $OUTDIR/ca.key -out $OUTDIR/ca.crt
 	##  openssl req -new -x509 -days 1826 -key ca.key -out ca.crt
 
 	# Step 3:
@@ -49,7 +49,7 @@ mkConfigFiles () {
 	# Now we create a certificate request .csr.
 	# When filling out the form the common name is important
 	# and is usually the domain name of the server.
-		openssl req -new -config server.cnf -out $OUTDIR/server.csr -key $OUTDIR/server.key
+		openssl req -new -config mosquitto-server.cnf -out $OUTDIR/server.csr -key $OUTDIR/server.key
 
 	# Step 5:
 	# Now we use the CA key to verify and sign the server certificate.
@@ -57,6 +57,7 @@ mkConfigFiles () {
 		openssl x509 -req -in $OUTDIR/server.csr -CA $OUTDIR/ca.crt -CAkey $OUTDIR/ca.key -CAcreateserial -out $OUTDIR/server.crt -days 360
 
 	# Step 6:
+	    chmod 600 $OUTDIR/*
 		ls -l $OUTDIR
 
 	# Step 7:
@@ -69,12 +70,12 @@ mkConfigFiles () {
 	# Use the ca_certificates folder for the CA certificate and
 	# the certs folder for the server certificate and key.
 	echo .
-	echo "Copy  \"ca.crt\", \"server.crt\" and \"server.key\"  files to mosquitto server"
+	echo "Copy/install  \"ca.crt\", \"server.crt\" and \"server.key\"  files to mosquitto server"
 
 	# Step 8:
 	# Copy the CA certificate file  ca.crt  to the client.
 	echo .
-	echo "Copy  \"ca.crt\"  file to client"
+	echo "Copy/install  \"ca.crt\"  file to client"
 
 	# Step 9:
 	echo ""                                                >$SERVERCONF
@@ -89,7 +90,7 @@ mkConfigFiles () {
 
 	# Step 10:
 	echo .
-	echo " Copy  \"server.conf\" file to mosquitto server"
+	echo "Copy/install  \"server.conf\" file to mosquitto server"
 	echo .
 }
 
@@ -111,15 +112,16 @@ dockerCp2host () {
 
 
 dockerCp2container () {
-	docker cp  $OUTDIR/ca.crt      $1:/root/$OUTDIR/
-	docker cp  $OUTDIR/server.crt  $1:/root/$OUTDIR/
-	docker cp  $OUTDIR/server.key  $1:/root/$OUTDIR/
-	docker cp  mkcert.sh           $1:/root/
+	docker cp  mosquitto-cert.sh     $1:/root/
+	docker cp  mosquitto-server.cnf  $1:/root/
+	docker cp  $OUTDIR/ca.crt        $1:/root/$OUTDIR/
+	docker cp  $OUTDIR/server.crt    $1:/root/$OUTDIR/
+	docker cp  $OUTDIR/server.key    $1:/root/$OUTDIR/
 }
 
 
 printHelp () {
-	echo "Usage:  $1 [mkconfig | install | id | getconfig | putconfig]"
+	echo "Usage:  $1 [ mkconfig | install | id | getconfig ID | putconfig ID ]"
 }
 
 case "$1" in
