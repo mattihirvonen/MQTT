@@ -1,4 +1,31 @@
 
+Note:
+  mosquitto process all (*).conf files in case sensitive
+  alphabetical order from "include_dir" ("/etc/mosquitto/conf.d/")
+
+Ref:
+  http://www.steves-internet-guide.com/mossquitto-conf-file/
+  https://mosquitto.org/man/mosquitto-conf-5.html
+
+
+"mkcert.sh" create and install mosquitto server SSL/TLS keys and configuration
+
+  mkcert.sh  mkconfig    create certificate and configuration files into "config/" folder
+  
+  mkcert.sh  install     copy certificate and configuration files from "config/" folder
+                         to "/etc/mosquitto/*" folders
+						 
+  mkcert.sh  id          list running docker container instances and ID(s).
+                         ID required as command line argument when
+						 copy config files from/to container's folder(s)
+						 
+  mkcert.sh getconfig    copy docker container's mosquitto server's config files
+                         into host's local folder "config/"
+
+  mkcert.sh putconfig    copy mosquitto server's config files from local host's "config/"
+                         folder into docker container's "/root/config/" folder
+						 
+=======================================================
 
 List running docker instances to get CONTAINER_ID:
 
@@ -12,15 +39,11 @@ Copy file or folder from the local file system to a docker container
 
     docker cp /host/local/path/file CONTAINER_ID:/file/path/in/container/file
 
-Exsample:
+Example:
 
+    docker ps
     docker cp  ca.crt          d362659da5fc:/etc/mosquitto/ca_certificates/
 	docker cp  server.crt      d362659da5fc:/etc/mosquitto/certs/
 	docker cp  server.key      d362659da5fc:/etc/mosquitto/certs/
 	docker cp  setsecure.conf  d362659da5fc:/etc/mosquitto/conf.d/
 
-Note: mosquitto process all (*).conf files in case sensitive
-      alphabetical order in "include_dir" ("/etc/mosquitto/conf.d/")
-
-	http://www.steves-internet-guide.com/mossquitto-conf-file/
-	https://mosquitto.org/man/mosquitto-conf-5.html
